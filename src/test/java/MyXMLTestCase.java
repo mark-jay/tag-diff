@@ -19,11 +19,17 @@ public class MyXMLTestCase extends XMLTestCase {
         return new FileReader(new File(Thread.currentThread().getContextClassLoader().getResource(name).toURI()));
     }
 
-    public void testXmlsEquals() throws Exception{
-        assertXmlsEquals("KDT_wellformed.xml", "buggedKDT-imported-namespace.xml");
+    public void testXmlsNotEquals() throws Exception {
+        assertXMLNotEqual("comparing xmls",
+                fromResource("KDT_wellformed.xml"), fromResource("buggedKDT-imported-namespace.xml"));
     }
 
-    public void assertXmlsEquals(String xmlName1, String xmlName2) throws Exception {
-        assertXMLEqual("comparing xmls", fromResource(xmlName1), fromResource(xmlName2));
+    /**
+     * regex '>[^<]+<' -> '><'
+     * @throws Exception
+     */
+    public void testXmlsEquals() throws Exception {
+        assertXMLEqual("comparing xmls",
+                fromResource("NV_KDT_wellformed.xml"), fromResource("NV_buggedKDT-imported-namespace.xml"));
     }
 }
